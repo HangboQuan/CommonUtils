@@ -212,21 +212,21 @@ public class FestivalHandler {
 					res += ans.get(j).split("\t")[1] + strings[1];
 				}
 
-        		System.out.println(res);
 				int lunarYear = year;
 
-        		System.out.println(ans.get(j).split("\t")[0]);
+        		String calendar = lunarToSolarDate(year + "0101");
+        		LocalDate newYearOfSolar = LocalDate.of(year, 1, 1);
+        		LocalDate newYearOfLunar = LocalDate.of(Integer.parseInt(calendar.substring(0, 4))
+					,Integer.parseInt(calendar.substring(4, 6))
+					,Integer.parseInt(calendar.substring(6, 8)));
+        		LocalDate curDate = LocalDate.of(Integer.parseInt(date.substring(0, 4))
+						,Integer.parseInt(date.substring(4, 6))
+						,Integer.parseInt(date.substring(6, 8)));
 
-				/*for (int k = 0; k < monthMap.length; k ++ ){
-					String temp = ans.get(j).split("\t")[1];
-					if(temp.substring(0, temp.indexOf("月")).equalsIgnoreCase(monthMap[k])) {
-						if (k >= 10) {
-							lunarYear --;
-							break;
-						}
-					}
-				}*/
-
+        		if ((curDate.isAfter(newYearOfSolar) && curDate.isBefore(newYearOfLunar) ||
+						curDate.isEqual(newYearOfSolar))) {
+        			lunarYear --;
+				}
 				res = lunarYear + chineseConvertNumberOfLunar(res);
 				return res;
 
@@ -328,19 +328,19 @@ public class FestivalHandler {
 
 	public static void main(String[] args){
 		// 阳历转阴历
-//		System.out.println(solarToLunarDate("19991229"));
+		System.out.println(solarToLunarDate("19991229"));
 
 		// 阴历转阳历
-//		System.out.println(lunarToSolarDate("19991122"));
+		System.out.println(lunarToSolarDate("19991122"));
 
 		/**
 		 * 七夕节 20220804 中元节 20220812 除夕 20230121 下元节 20221108 北方小年 20230114 重阳节 20221004 元宵节 20220215
 		 * 南方小年 20230115 中秋节 20220910 清明节 20220405 春节 20220201 端午节 20220603 冬至节 20221222
 		 */
-    	/*HashMap<String, String> map = festivalLunarOfYear("2022");
+    	HashMap<String, String> map = festivalLunarOfYear("2022");
 		for (Map.Entry<String, String> m : map.entrySet()){
             System.out.println(m.getKey() + " " + m.getValue());
-		}*/
+		}
 
 		/**
 		 * 农历2020年 4月是有闰4月  如果输入的农历日期 这里默认的是没有闰月的情况
@@ -350,22 +350,28 @@ public class FestivalHandler {
 		 *
 		 * 这里看到 如果想找到闰4月的对应的 阳历， 先得考虑如何输入闰四月呢
 		 */
-		/*lunarToSolarDate("20200401");
+		lunarToSolarDate("20200401");
 		lunarToSolarDate("20200430");
 		lunarToSolarDate("20200501");
 
 		LocalDate localDate = LocalDate.of(2020, 1, 1);
 		int step = 1;
 
-		for(int i = 0; i < 365; i ++ ){
+		for(int i = 0; i < 700; i ++ ){
       		System.out.println(formatLocalDate(localDate) + " " + solarToLunarDate(formatLocalDate(localDate)));
 			localDate = localDate.plusDays(step);
 		}
 
-
-		System.out.println(solarToLunarDate("19991117"));*/
+		/**
+		 * 农历2020年 4月是闰4月
+		 * 阳历: "20200423" 农历: "20200401"
+		 * 阳历: "20200523" 农历: "20200401" (该日期为闰4月，和上面未做区分)
+		 * 阳历: "20200621" 农历: "20200501"
+		 */
+		System.out.println(solarToLunarDate("19991117"));
     	System.out.println(solarToLunarDate("20201216"));
     	System.out.println(solarToLunarDate("20210212"));
+    	System.out.println(solarToLunarDate("20200101"));
 	}
 
 	public static String formatLocalDate(LocalDate localDate){

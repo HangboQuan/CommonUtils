@@ -534,11 +534,20 @@ public class FestivalHandler {
 			if(year == Integer.parseInt(date.substring(0, 4)) && month == Integer.parseInt(date.substring(4, 6))
 					   && day == Integer.parseInt(date.substring(6, 8))){
 				
+				String dayOfWeek = ans.get(i).split("\t")[2];
+				
+				String solarTerm = "";
+				if(ans.get(i).split("\t").length == 4) {
+					solarTerm = ans.get(i).split("\t")[3];
+				}
 				int j = i;
 				
 				String res = "";
 				while (!ans.get(j).split("\t")[1].contains("月")) {
 					j --;
+					if (j < 0) {
+						return null;
+					}
 				}
 				
 				// ans.get(j).split("\t")[1]获取的是月份
@@ -549,12 +558,7 @@ public class FestivalHandler {
 					res += ans.get(j).split("\t")[1] + strings[1];
 				}
 				
-				String dayOfWeek = ans.get(j).split("\t")[2];
 				
-				String solarTerm = "";
-				if(ans.get(j).split("\t").length == 4) {
-					solarTerm = ans.get(j).split("\t")[3];
-				}
 				int lunarYear = year;
 				
 				String calendar = lunarToSolarDate(year + "0101");
@@ -586,19 +590,19 @@ public class FestivalHandler {
 	}
 	public static void main(String[] args){
 		// 阳历转阴历
-		System.out.println(solarToLunarDate("19991229"));
+	//		System.out.println(solarToLunarDate("19991229"));
 		
 		// 阴历转阳历
-		System.out.println(lunarToSolarDate("19991122"));
+	//		System.out.println(lunarToSolarDate("19991122"));
 		
 		/**
 		 * 七夕节 20220804 中元节 20220812 除夕 20230121 下元节 20221108 北方小年 20230114 重阳节 20221004 元宵节 20220215
 		 * 南方小年 20230115 中秋节 20220910 清明节 20220405 春节 20220201 端午节 20220603 冬至节 20221222
 		 */
-		HashMap<String, String> map = festivalLunarOfYear("2022");
-		for (Map.Entry<String, String> m : map.entrySet()){
-			System.out.println(m.getKey() + " " + m.getValue());
-		}
+	        /*HashMap<String, String> map = festivalLunarOfYear("2022");
+			for (Map.Entry<String, String> m : map.entrySet()){
+	            System.out.println(m.getKey() + " " + m.getValue());
+			}*/
 		
 		/**
 		 * 农历2020年 4月是有闰4月  如果输入的农历日期 这里默认的是没有闰月的情况
@@ -608,15 +612,15 @@ public class FestivalHandler {
 		 *
 		 * 这里看到 如果想找到闰4月的对应的 阳历， 先得考虑如何输入闰四月呢
 		 */
-		lunarToSolarDate("20200401");
-		lunarToSolarDate("20200430");
-		lunarToSolarDate("20200501");
-		
-		LocalDate localDate = LocalDate.of(2022, 1, 1);
-		int step = 1;
+			/*lunarToSolarDate("20200401");
+			lunarToSolarDate("20200430");
+			lunarToSolarDate("20200501");*/
 	
-			/*for(int i = 0; i < 365; i ++ ){
-	            System.out.println(formatLocalDate(localDate) + " " + constellation(formatLocalDate(localDate)));
+			/*LocalDate localDate = LocalDate.of(2058, 1, 1);
+			int step = 1;
+	
+			for(int i = 0; i < 3000; i ++ ){
+	            System.out.println(formatLocalDate(localDate) + " " + new Gson().toJson(inputSolarDate(formatLocalDate(localDate)), CalenderResult.class));
 				localDate = localDate.plusDays(step);
 			}*/
 		
@@ -626,23 +630,28 @@ public class FestivalHandler {
 		 * 阳历: "20200523" 农历: "20200401" (该日期为闰4月，和上面未做区分)
 		 * 阳历: "20200621" 农历: "20200501"
 		 */
-		System.out.println(solarToLunarDate("19991117"));
-		System.out.println(solarToLunarDate("20201216"));
-		System.out.println(solarToLunarDate("20210212"));
-		System.out.println(solarToLunarDate("20200101"));
-		
-		System.out.println(yearOfGanZhi("2022"));
+			/*System.out.println(solarToLunarDate("19991117"));
+	        System.out.println(solarToLunarDate("20201216"));
+	        System.out.println(solarToLunarDate("20210212"));
+	        System.out.println(solarToLunarDate("20200101"));
 	
-		for(int i = 1900; i <= 2100; i ++ ){
-			System.out.println(i + " " + yearOfChineseZodiac(i + ""));
-		}
+			System.out.println(yearOfGanZhi("2022"));*/
+	
+			/*for(int i = 1900; i <= 2100; i ++ ){
+				System.out.println(i + " " + yearOfChineseZodiac(i + ""));
+			}*/
+	
+			/*System.out.println(new Gson().toJson(inputLunarDate("19991122"), CalenderResult.class));
+			System.out.println(new Gson().toJson(inputSolarDate("19991229"), CalenderResult.class));
+			System.out.println(new Gson().toJson(inputSolarDate("20220405"), CalenderResult.class));*/
+	//		System.out.println(new Gson().toJson(inputSolarDate("19020101"), CalenderResult.class));
 		
-		System.out.println(new Gson().toJson(inputLunarDate("19991122"), CalenderResult.class));
+		// 19010209-19010101
+		// 19010101-19011231
+			/*System.out.println(new Gson().toJson(inputLunarDate("19010208"), CalenderResult.class));
+			System.out.println(new Gson().toJson(inputSolarDate("19011221"), CalenderResult.class));*/
 		System.out.println(new Gson().toJson(inputSolarDate("19991229"), CalenderResult.class));
-		
-		// 修复中
-		System.out.println(new Gson().toJson(inputSolarDate("20220405"), CalenderResult.class));
-        System.out.println(new Gson().toJson(inputSolarDate("19010121"), CalenderResult.class));
+		System.out.println(new Gson().toJson(inputLunarDate("19010209"), CalenderResult.class));
 	}
 	
 	public static String formatLocalDate(LocalDate localDate){
@@ -677,5 +686,6 @@ public class FestivalHandler {
 		private String constellation;
 		private String ganZhi;
 		private String solarTerm;
+		private String lunarChinese;
 	}
 }

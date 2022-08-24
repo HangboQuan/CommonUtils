@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FestivalHandler {
@@ -24,7 +25,6 @@ public class FestivalHandler {
 	private static final String[] lunarMap = {"初", "十", "廿"};
 	private static final String[] constellationMap = {"白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "摩羯座", "水瓶座", "双鱼座"};
 	private static final String[] chineseZodiacMap = {"鼠", "牛", "虎", "兔", "龙", "蛇", "羊", "马", "猴", "鸡", "狗", "猪"};
-	private static final String[] weekOfDayMap = {"一", "二", "三", "四", "五", "六", "日"};
 	private static final String[] tianGan = {"甲", "乙", "丙", "丁", "戊", "已", "庚", "辛", "壬", "癸"};
 	private static final String[] diZhi = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
 	
@@ -569,12 +569,14 @@ public class FestivalHandler {
 					int lunarYear = 1900;
 					String lunarDate = lunarYear + "11" + chineseConvertDayOfLunar(ans.get(i).split("\t")[1]);
 					
+					String lunarDayOfChinese = "十一月" + ans.get(i).split("\t")[1];
+					
 					String chineseZodiac = yearOfChineseZodiac(String.valueOf(lunarYear));
 					String ganZhi = yearOfGanZhi(String.valueOf(lunarYear));
 					
 					return calenderResult.setSolarDate(date).setLunarDate(lunarDate).setDayOfWeek(dayOfWeek)
 							       .setChineseZodiac(chineseZodiac).setGanZhi(ganZhi).setConstellation(constellationOfSolarDate)
-							       .setSolarTerm(solarTerm);
+							       .setSolarTerm(solarTerm).setLunarChinese(lunarDayOfChinese);
 					
 				}
 				
@@ -593,11 +595,9 @@ public class FestivalHandler {
 					// 这里是做了拼接: 比如十一月初二
 					res += ans.get(j).split("\t")[1] + strings[1];
 				}
-				
-				
+				String lunarDayOfChinese = res.equalsIgnoreCase(strings[1]) ? res + "初一" : res;
 				int lunarYear = year;
 				// 1901年作为特殊年份, 单独处理　19010101-19010218 对应的 19001111-19001230
-				System.out.println(lunarYear);
 				String calendar = lunarToSolarDate(year + "0101");
 				LocalDate newYearOfSolar = LocalDate.of(year, 1, 1);
 				LocalDate newYearOfLunar = LocalDate.of(Integer.parseInt(calendar.substring(0, 4))
@@ -618,13 +618,14 @@ public class FestivalHandler {
 				
 				return calenderResult.setSolarDate(date).setLunarDate(res).setDayOfWeek(dayOfWeek)
 						       .setChineseZodiac(chineseZodiac).setGanZhi(ganZhi).setConstellation(constellationOfSolarDate)
-						       .setSolarTerm(solarTerm);
+						       .setSolarTerm(solarTerm).setLunarChinese(lunarDayOfChinese);
 				
 			}
 		}
 		
 		return null;
 	}
+	
 	public static void main(String[] args){
 		// 阳历转阴历
 		//		System.out.println(solarToLunarDate("19991229"));
@@ -656,7 +657,7 @@ public class FestivalHandler {
 		int step = 1;
 		
 		for(int i = 0; i < 70000; i ++ ){
-			System.out.println(formatLocalDate(localDate) + " " + new Gson().toJson(inputLunarDate(formatLocalDate(localDate)), CalenderResult.class));
+			System.out.println(formatLocalDate(localDate) + " " + new Gson().toJson(inputSolarDate(formatLocalDate(localDate)), CalenderResult.class));
 			localDate = localDate.plusDays(step);
 		}
 		
@@ -686,8 +687,9 @@ public class FestivalHandler {
 		// 19010101-19011231
 				/*System.out.println(new Gson().toJson(inputLunarDate("19010208"), CalenderResult.class));
 				System.out.println(new Gson().toJson(inputSolarDate("19011221"), CalenderResult.class));*/
-	//		System.out.println(new Gson().toJson(inputSolarDate("19010119"), CalenderResult.class));
-		System.out.println(new Gson().toJson(inputLunarDate("19010101"), CalenderResult.class));
+		System.out.println(new Gson().toJson(inputSolarDate("20930723"), CalenderResult.class));
+		System.out.println(new Gson().toJson(inputSolarDate("20930624"), CalenderResult.class));
+	//		System.out.println(new Gson().toJson(inputLunarDate("19010101"), CalenderResult.class));
 	}
 	
 	public static String formatLocalDate(LocalDate localDate){

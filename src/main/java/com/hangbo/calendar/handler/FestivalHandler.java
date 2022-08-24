@@ -569,7 +569,7 @@ public class FestivalHandler {
 					int lunarYear = 1900;
 					String lunarDate = lunarYear + "11" + chineseConvertDayOfLunar(ans.get(i).split("\t")[1]);
 					
-					String lunarDayOfChinese = "十一月" + ans.get(i).split("\t")[1];
+					String lunarDayOfChinese = "冬月" + ans.get(i).split("\t")[1];
 					
 					String chineseZodiac = yearOfChineseZodiac(String.valueOf(lunarYear));
 					String ganZhi = yearOfGanZhi(String.valueOf(lunarYear));
@@ -618,7 +618,7 @@ public class FestivalHandler {
 				
 				return calenderResult.setSolarDate(date).setLunarDate(res).setDayOfWeek(dayOfWeek)
 						       .setChineseZodiac(chineseZodiac).setGanZhi(ganZhi).setConstellation(constellationOfSolarDate)
-						       .setSolarTerm(solarTerm).setLunarChinese(lunarDayOfChinese);
+						       .setSolarTerm(solarTerm).setLunarChinese(lunarDayOfChinese.replace("十一月", "冬月").replace("十二月", "腊月"));
 				
 			}
 		}

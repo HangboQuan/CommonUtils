@@ -70,7 +70,8 @@ if __name__ == '__main__':
             for zoneTag in zoneTags:
                 # print("zoneTag:" + zoneTag.get("href"))
                 street = zone[0 : zone.rindex("/")] + "/" + zoneTag.get('href')
-                if not (street.endswith("html") or street.__eq__(prevStreet)):
+
+                if not (street.endswith("html")) or street.__eq__(prevStreet):
                     continue
                 # print(street)
                 prevStreet = street
@@ -79,27 +80,50 @@ if __name__ == '__main__':
                 streetSoup = bs(streetGet.text, 'lxml')
                 streetTags = streetSoup.find_all("a")
                 prevStay = ""
+
                 for streetTag in streetTags:
                     stay = street[0 : street.rindex("/")] + "/" + streetTag.get('href')
-                    if not (stay.endswith("html") or stay.__eq__(prevStay)):
+                    if not (stay.endswith("html")) or stay.__eq__(prevStay):
                         continue
                     prevStay = stay
                     stayGet = requests.get(stay)
-                    stayGet.encoding = 'utf-8'
-                    staySoup = bs(stayGet.text, 'lxml')
-
-                    # tags = staySoup.find("tr", {'class':'villagetr'}).children
-                    # print(tags)
-                    #
-                    # for tag in tags:
-                    #     print(type(tag))
                     stayList = []
-                    for tr in staySoup.find('tr', {'class' : 'villagetr'}).children:
-                        if not re.match('<td>[0-9]*</td>', str(tr)):
-                            print(tr)
-                        # stayTags = staySoup.find_all('tr', {'class':'villagetr'}).children
-                        stayList.append()
 
+                    stayList.append(streetTag.get_text())
+                    if (stayGet.status_code == 200):
+                        stayGet.encoding = 'utf-8'
+                        staySoup = bs(stayGet.text, 'lxml')
+
+                        # tags = staySoup.find("tr", {'class':'villagetr'}).children
+                        # print(tags)
+                        #
+                        # for tag in tags:
+                        #     print(type(tag))
+
+
+
+                        # for tr in staySoup.find('tr', {'class':'villagetr'}).children:
+                        #     print(tr)
+                        for tr in staySoup.find_all('tr', {'class':'villagetr'}):
+                            for td in tr('td'):
+                                if not re.match('<td>[0-9]*</td>', str(td)):
+                                    res = str(td).replace("<td>", "").replace("</td>", "")
+                                    stayList.append(res)
+                        with open('D:/city.txt', 'a+', encoding='utf-8') as f:
+                            f.write('\t'.join(stayList))
+                            f.write("\n")
+                        print(stayList)
+
+                    else:
+                        # 继续再发一次请求
+                        prevStay = ""
+                        print("request again:", stay)
+                    # for tr in staySoup.find_all('tr', {'class' : 'villagetr'}).children:
+                    #     if not re.match('<td>[0-9]*</td>', str(tr)):
+                    #         # print(tr)
+                    #         # stayTags = staySoup.find_all('tr', {'class':'villagetr'}).children
+                    #         stayList.append(str(tr).replace("<td>", "").replace("</td>", ""))
+                    # print(stayList)
                     # print(stayTags)
                     # for stayTag in stayTags:
                     #     print(stayTag.get_text())

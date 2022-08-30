@@ -54,8 +54,7 @@ if __name__ == '__main__':
         'Cookie': 'SF_cookie_1=15502425',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36'
     }
-    provinceCode = ["11","12", "13", "14", "15", "21", "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42", "43","44", "45", "46", "50", "51", "52", "53", "54", "61", "62", '63', '64', "65"]
-
+    provinceCode = ["62", '63', '64', "65"]
     # province = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/index.html"
     # provinceTr =  requests.get(province,  provinceHeader)
     # provinceTr.encoding = 'utf-8'
@@ -141,7 +140,7 @@ if __name__ == '__main__':
                                                             if not re.match('<td>[0-9]*</td>', str(td)):
                                                                 res = str(td).replace("<td>", "").replace("</td>", "")
                                                                 stayList.append(res)
-                                                    with open('/home/work/quanhangbo/spider/city.txt', 'a+', encoding='utf-8') as f:
+                                                    with open('D:/city_start_62.txt', 'a+', encoding='utf-8') as f:
                                                         f.write('\t'.join(stayList))
                                                         f.write("\n")
                                                     print(stayList)

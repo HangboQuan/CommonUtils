@@ -34,4 +34,5 @@ inputLunarDate("19991122"), 输出json数据(输入："19991122", 输出：
 1.从香港天文台 爬取(1900,2100]的阳历和阴历的对照表 https://www.hko.gov.hk/tc/gts/time/calendar/text/files/T2022c.txt, 项目中放在resouces/utils/lunar_solar_map<br/>
 2.根据第一步的数据，做查表功能实现<br/>
 # 2. 中国省市区json数据
-具体为省-市-区-街道-居委会(如：北京市-北京市-海淀区-清河街道-安宁庄社区居委会), 数据来源于：国家统计局最新公布的2021的数据http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/index.html
+具体为省-市-区-街道-居委会(如：北京市-北京市-海淀区-清河街道-安宁庄社区居委会)<br/>
+数据来源于：国家统计局最新公布的2021的数据http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2021/index.html

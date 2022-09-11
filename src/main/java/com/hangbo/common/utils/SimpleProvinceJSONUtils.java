@@ -1,4 +1,4 @@
-package com.hangbo.calendar.utils;
+package com.hangbo.common.utils;
 
 import com.google.gson.Gson;
 import lombok.Data;

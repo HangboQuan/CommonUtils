@@ -89,7 +89,7 @@ public class HTMLBuilder {
 		}
 
 
-		public void buildRowValues(String ... values) {
+		public void buildRowValues(Object ... values) {
 			if(values.length != this.columns) {
 				System.out.println("ERROR COLUMN LENGTH");
 			}

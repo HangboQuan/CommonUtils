@@ -44,5 +44,8 @@ inputLunarDate("19991122"), 输出json数据(输入："19991122", 输出：
 其他中间数据：[其他省市数据](https://github.com/HangboQuan/CommonUtils/tree/master/province-city-zone-street-stay)<br/>
 
 实现思路：<br/>
-1.从国家统计局爬取必要的省-市-区-街道-居委会的信息, 由于爬的时候可能缺失, 所以多爬几次多个数据做join就行
+1.从国家统计局爬取必要的省-市-区-街道-居委会的信息, 由于爬的时候可能缺失, 所以多爬几次多个数据做join就行<br/>
+
+# 3.HTMLBuilder.java用来构建一个表格,比如发送邮件的数据,[见样式](https://github.com/HangboQuan/CommonUtils/blob/master/picture/20220919-211900.png)
+
 

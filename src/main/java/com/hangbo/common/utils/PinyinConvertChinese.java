@@ -29,5 +29,25 @@ public class PinyinConvertChinese {
 		// hàn,tǒng,shuāi,luò,huàn,guān,niàng,huò,guó,luàn,suì,xiōng,sì,fāng,rǎo,rǎng
 		String oldString = "汉统衰落宦官酿祸国乱岁凶四方扰攘";
 		System.out.println(PinyinHelper.convertToPinyinString(oldString, ",", PinyinFormat.WITH_TONE_MARK));
+		
+		char c = '乐';
+		String[] s = PinyinHelper.convertToPinyinArray(c, PinyinFormat.WITH_TONE_MARK);
+        System.out.println(s.length);
+        for (int i = 0; i < s.length; i ++ ) {
+            System.out.print(s[i] + " ");
+        }
+        System.out.println();
+
+        /**
+         * xián|lè huān|lè
+         * */
+        String a = "弦乐";
+		String b = "欢乐";
+		// These is something wrong
+        System.out.println(PinyinHelper.convertToPinyinString(a, "|", PinyinFormat.WITH_TONE_MARK));
+        System.out.println(PinyinHelper.convertToPinyinString(b, "|", PinyinFormat.WITH_TONE_MARK));
+		
+		System.out.println(PinyinHelper.convertToPinyinString(a, "|", PinyinFormat.WITH_TONE_NUMBER));
+		System.out.println(PinyinHelper.convertToPinyinString(a, "|", PinyinFormat.WITHOUT_TONE));
 	}
 }
